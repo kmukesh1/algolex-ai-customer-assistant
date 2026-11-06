@@ -1,0 +1,101 @@
+{
+  "name": "Algolex Solutions - AI Customer Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "public": false,
+        "initialMessages": "Hello! Welcome to Algolex Solutions. How can I help you today?",
+        "options": {}
+      },
+      "id": "a1b2c3d4-e5f6-4a11-8b22-123456789001",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [240, 300],
+      "webhookId": "algolex-ai-customer-assistant-chat"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "You are the official AI Customer Assistant of Algolex Solutions.\n\nOUR SERVICES:\n1. AI Solutions and AI Automation.\n2. Digital Marketing.\n3. Online Maths and Physics Coaching for NEET, JEE, IB and IGCSE.\n4. Website Development.\n5. Mobile App Development.\n6. Logo and Graphic Design.\n7. Legal Technology Support.\n\nBEHAVIOUR:\n- Welcome customers politely and understand their needs.\n- Explain services in simple English.\n- Be professional, friendly and concise.\n- Ask only one question at a time.\n- Never invent prices, offers, contact details or guarantees.\n- If unsure, say the Algolex Solutions team can confirm.\n- Help customers choose a suitable service."
+        }
+      },
+      "id": "a1b2c3d4-e5f6-4a11-8b22-123456789002",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [520, 300]
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "id": "a1b2c3d4-e5f6-4a11-8b22-123456789003",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [480, 540],
+      "credentials": {
+        "ollamaApi": {
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "a1b2c3d4-e5f6-4a11-8b22-123456789004",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [760, 540]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "Starter template based on the Algolex Solutions local n8n AI Customer Assistant. Re-select or create the Ollama credential after import."
+  },
+  "tags": []
+}
