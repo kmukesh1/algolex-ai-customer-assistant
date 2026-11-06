@@ -13,3 +13,7 @@ Place your exported n8n workflow JSON file(s) here.
 
 ### Importing
 In a new n8n instance: Menu → **Import from File** and select the JSON.
+
+### After Import
+- Set the Ollama Chat Model base URL to `http://ollama:11434` (Docker) or `http://localhost:11434` (host).
+- Make sure the `llama3.2` model is available in Ollama.
